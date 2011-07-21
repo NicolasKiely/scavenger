@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-//import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 public class EntityListener extends org.bukkit.event.entity.EntityListener
@@ -37,6 +36,8 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener
             		
             		if (lastDamager instanceof Player){
             			Scavenger.get().logInfo("Player killed by player");
+            			/* Skip restoration */
+            			return;
             		}
             	}
 		    
