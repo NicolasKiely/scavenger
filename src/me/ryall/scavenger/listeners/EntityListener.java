@@ -35,7 +35,7 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener
             		if (lastDamager instanceof Player){
             			/* Killed in pvp */
             			
-            			if (Scavenger.get().getPermissionManager().hasImmunityPermission(player)){
+            			if (!Scavenger.get().getPermissionManager().hasImmunityPermission(player)){
             			/* Skip restoration */
                 			return;
             			}
