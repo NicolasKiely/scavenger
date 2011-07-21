@@ -5,6 +5,8 @@ import me.ryall.scavenger.system.RestorationManager;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 public class EntityListener extends org.bukkit.event.entity.EntityListener
@@ -20,12 +22,12 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener
             Player player = (Player)event.getEntity();
 
             if (Scavenger.get().getPermissionManager().hasScavengePermission(player))
+            {
                 
-
-		/*EnitityDamageEvent cause =
-		    event.getEntity().getLastDamageCause();
-		  */  
-		RestorationManager.collect((Player)event.getEntity(), event.getDrops());
+            	EntityDamageEvent lastDamager = event.getEntity().getLastDamageCause();
+		    
+            	RestorationManager.collect((Player)event.getEntity(), event.getDrops());
+            }
         }
     }
 }
