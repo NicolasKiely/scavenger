@@ -26,18 +26,19 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener
                 
             	/* Figure out what cause the damage */
             	EntityDamageEvent lastCause = event.getEntity().getLastDamageCause();
-            	//DamageCause dmgCause = lastDamager.getCause();
             	
             	if (lastCause instanceof EntityDamageByEntityEvent){
-            		Scavenger.get().logInfo("Entity killed Player " + player.getDisplayName());
             		
             		EntityDamageByEntityEvent eeeee = (EntityDamageByEntityEvent)event.getEntity().getLastDamageCause();
             		Entity lastDamager = eeeee.getDamager();
             		
             		if (lastDamager instanceof Player){
-            			Scavenger.get().logInfo("Player killed by player");
+            			/* Killed in pvp */
+            			
+            			if (Scavenger.get().getPermissionManager().hasImmunityPermission(player)){
             			/* Skip restoration */
-            			return;
+                			return;
+            			}
             		}
             	}
 		    

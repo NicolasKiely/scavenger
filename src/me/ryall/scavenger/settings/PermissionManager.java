@@ -38,6 +38,11 @@ public class PermissionManager
         return hasGlobalPermission(_player) || hasPermission(_player, PERMISSIONS_PREFIX + "scavenge");
     }
     
+    /* Returns whether or not the player has immunity from pvp */
+    public boolean hasImmunityPermission(Player _player){
+    	return hasGlobalPermission(_player) || hasPermission(_player, PERMISSIONS_PREFIX + "pvpimmune");
+    }
+    
     public boolean hasFreePermission(Player _player)
     {
         return hasGlobalPermission(_player) || hasPermission(_player, PERMISSIONS_PREFIX + "free");
