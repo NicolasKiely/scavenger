@@ -1,10 +1,15 @@
 package me.ryall.scavenger.economy;
 
-// iConomy
+// working off assumptions:
+// main bank account is bank account being used
+// holdings is the proper money of the account
 import org.bukkit.plugin.Plugin;
 
-import com.nijiko.coelho.iConomy.iConomy;
-import com.nijiko.coelho.iConomy.system.Account;
+
+import com.iConomy.iConomy;
+
+import com.iConomy.system.Account;
+
 
 public class IConomyFourAdapter extends EconomyInterface
 {
@@ -19,9 +24,10 @@ public class IConomyFourAdapter extends EconomyInterface
 
     public double getBalance(String _playerName)
     {
-        Account acc = iConomy.getBank().getAccount(_playerName);
+        Account acc = iConomy.getAccount(_playerName);
 
-        return (acc == null) ? 0 : acc.getBalance();
+        /* Modified, not sure if correct though */
+        return (acc == null) ? 0 : acc.getHoldings().balance();
     }
 
     public boolean canAfford(String _playerName, double _amount)
@@ -29,18 +35,18 @@ public class IConomyFourAdapter extends EconomyInterface
         if (_amount == 0)
             return true;
 
-        Account acc = iConomy.getBank().getAccount(_playerName);
+        Account acc = iConomy.getAccount(_playerName);
 
-        return (acc == null) ? false : acc.hasEnough(_amount);
+        return (acc == null) ? false : acc.getHoldings().hasEnough(_amount);
     }
 
     public boolean add(String _playerName, double _amount)
     {
-        Account acc = iConomy.getBank().getAccount(_playerName);
+        Account acc = iConomy.getAccount(_playerName);
 
         if (acc != null)
         {
-            acc.add(_amount);
+            acc.getHoldings().add(_amount);
             return true;
         }
 
@@ -49,11 +55,11 @@ public class IConomyFourAdapter extends EconomyInterface
 
     public boolean subtract(String _playerName, double _amount)
     {
-        Account acc = iConomy.getBank().getAccount(_playerName);
+        Account acc = iConomy.getAccount(_playerName);
 
         if (acc != null)
         {
-            acc.subtract(_amount);
+            acc.getHoldings().subtract(_amount);
             return true;
         }
 
@@ -62,13 +68,13 @@ public class IConomyFourAdapter extends EconomyInterface
 
     public boolean transfer(String _playerFrom, String _playerTo, double _amount)
     {
-        Account accFrom = iConomy.getBank().getAccount(_playerFrom);
-        Account accTo = iConomy.getBank().getAccount(_playerTo);
+        Account accFrom = iConomy.getAccount(_playerFrom);
+        Account accTo = iConomy.getAccount(_playerTo);
 
         if (accFrom != null && accTo != null)
         {
-            accFrom.subtract(_amount);
-            accTo.add(_amount);
+            accFrom.getHoldings().subtract(_amount);
+            accTo.getHoldings().add(_amount);
 
             return true;
         }
@@ -78,6 +84,6 @@ public class IConomyFourAdapter extends EconomyInterface
 
     public String formatCurrency(double _amount)
     {
-        return getCurrencyString(_amount) + " " + iConomy.getBank().getCurrency();
+    	return iConomy.format(_amount);
     }
 }

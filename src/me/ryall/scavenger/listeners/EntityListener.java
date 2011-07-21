@@ -18,9 +18,14 @@ public class EntityListener extends org.bukkit.event.entity.EntityListener
         if (event.getEntity() instanceof Player)
         {
             Player player = (Player)event.getEntity();
-            
+
             if (Scavenger.get().getPermissionManager().hasScavengePermission(player))
-                RestorationManager.collect((Player)event.getEntity(), event.getDrops());
+                
+
+		/*EnitityDamageEvent cause =
+		    event.getEntity().getLastDamageCause();
+		  */  
+		RestorationManager.collect((Player)event.getEntity(), event.getDrops());
         }
     }
 }
